@@ -25,7 +25,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- ======== NAVBAR ======== -->
     <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50 h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -42,7 +41,6 @@
         </div>
     </nav>
 
-    <!-- ======== HERO ======== -->
     <section id="home" class="pt-32 pb-20 gradient-bg text-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
             <span class="bg-cyan-500/20 text-cyan-300 px-4 py-1.5 rounded-full text-sm font-medium border border-cyan-500/30">طبيب أسنان - المستوى الرابع</span>
@@ -56,7 +54,6 @@
         <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
     </section>
 
-    <!-- ======== SERVICES ======== -->
     <section id="services" class="py-24 max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <h2 class="text-3xl font-black text-blue-900">الخدمات الطبية المقدمة</h2>
@@ -96,7 +93,6 @@
         </div>
     </section>
 
-    <!-- ======== BOOKING ======== -->
     <section id="booking" class="py-24 bg-slate-100">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
@@ -141,7 +137,6 @@
         </div>
     </section>
 
-    <!-- ======== DOCTOR PANEL ======== -->
     <section id="doctor-panel" class="py-24 max-w-7xl mx-auto px-4 sm:px-6">
         <div class="bg-white rounded-3xl shadow-md border border-slate-100 overflow-hidden">
             <div class="p-8 border-b border-slate-100 bg-slate-50 flex flex-wrap items-center justify-between gap-4">
@@ -156,14 +151,12 @@
                 </div>
             </div>
             <div id="panelContent" class="p-8 panel-locked">
-                <!-- Tabs -->
                 <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-4">
                     <button data-filter="الكل" class="filter-tab bg-blue-900 text-white px-4 py-2 rounded-xl text-xs font-bold">الكل</button>
                     <button data-filter="قيد الانتظار" class="filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">قيد الانتظار</button>
                     <button data-filter="تم القبول" class="filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">المقبولة</button>
                     <button data-filter="تم الرفض" class="filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">المرفوضة</button>
                 </div>
-                <!-- Table -->
                 <div class="table-wrap">
                     <table class="w-full text-right border-collapse min-w-[700px]">
                         <thead>
@@ -177,15 +170,13 @@
                             </tr>
                         </thead>
                         <tbody id="appointmentsList" class="divide-y divide-slate-100 text-sm text-slate-700">
-                            <!-- يتم تعبئتها بواسطة JavaScript -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ======== FOOTER ======== -->
     <footer id="contact" class="bg-blue-950 text-slate-400 py-16 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
             <div>
@@ -217,22 +208,20 @@
         </div>
     </footer>
 
-    <!-- ======== FIREBASE & MAIN SCRIPT ======== -->
     <script type="module">
-        // ----- إعداد Firebase (ضع مفاتيحك الصحيحة هنا) -----
+        // ----- إعداد Firebase -----
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
             getFirestore, collection, addDoc, onSnapshot, doc, updateDoc 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // ⚠️ استبدل هذه البيانات ببيانات مشروعك من Firebase Console
         const firebaseConfig = {
-            apiKey: "AIzaSyDDGOIbyLoB5awNmHkAh8Gh4Q",  // ضع المفتاح الكامل
+            apiKey: "AIzaSyDDGOIbyLoB5awNmHkAh8Gh4Q",
             authDomain: "fares-clinic.firebaseapp.com",
             projectId: "fares-clinic",
             storageBucket: "fares-clinic.firebasestorage.app",
             messagingSenderId: "425147592244",
-            appId: "1:425147592244:web:6b86f91343",     // ضع الـ App ID الكامل
+            appId: "1:425147592244:web:6b86f91343",
             measurementId: "G-Y19YTE4DT3"
         };
 
@@ -240,19 +229,17 @@
         const db = getFirestore(app);
         const appointmentsRef = collection(db, "appointments");
 
-        // ----- متغيرات الحالة -----
         let allAppointments = [];
         let currentFilter = "الكل";
         const DOCTOR_PASSWORD = "Khalil770423656";
 
-        // ----- دوال مساعدة -----
         function formatDate(dateStr) {
             if (!dateStr) return "";
             const d = new Date(dateStr);
             if (isNaN(d.getTime())) return dateStr;
             const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
             const dayName = days[d.getDay()];
-            return `${dayName}، ${d.getDate()} ${d.toLocaleString( ar , { month:  long  })} ${d.getFullYear()}`;
+            return `${dayName}، ${d.getDate()} ${d.toLocaleString(  ar  , { month:   long   })} ${d.getFullYear()}`;
         }
 
         function getStatusBadge(status) {
@@ -264,7 +251,6 @@
             return `status-badge ${map[status] || "status-pending"}`;
         }
 
-        // ----- عرض المواعيد في الجدول -----
         function renderAppointments() {
             const container = document.getElementById("appointmentsList");
             const filtered = allAppointments.filter(app => {
@@ -304,7 +290,6 @@
             });
         }
 
-        // ----- معالجة تغيير الحالة -----
         async function handleAction(e) {
             const btn = e.currentTarget;
             const id = btn.dataset.id;
@@ -325,7 +310,6 @@
             }
         }
 
-        // ----- بناء رسالة واتساب للحالة -----
         function buildWhatsAppMessage(app, status) {
             const base = `🦷 عيادة د. خليل الوصابي 🦷\n\n`;
             const patient = `👤 المريض: ${app.name}\n📱 الهاتف: ${app.phone}\n🩺 الخدمة: ${app.service}\n📅 التاريخ: ${formatDate(app.date)}\n`;
@@ -336,7 +320,6 @@
             }
         }
 
-        // ----- بناء رسالة الحجز الجديد (المطلوبة) -----
         function buildNewBookingMessage(name, phone, service, date) {
             const formattedDate = formatDate(date);
             return `🦷 *اشعار حجز موعد جديد* 🦷\n\n` +
@@ -347,7 +330,6 @@
                    `💬 _تم الحجز تلقائياً في قاعدة البيانات بانتظار مراجعتكم_`;
         }
 
-        // ----- تحديث التبويبات -----
         function updateTabs(filter) {
             document.querySelectorAll(".filter-tab").forEach(btn => {
                 const f = btn.dataset.filter;
@@ -359,7 +341,6 @@
             });
         }
 
-        // ----- الاستماع للتغييرات في Firestore -----
         onSnapshot(appointmentsRef, (snapshot) => {
             allAppointments = [];
             snapshot.forEach(doc => {
@@ -369,7 +350,6 @@
             renderAppointments();
         });
 
-        // ----- حدث تقديم الحجز (معدل حسب الطلب) -----
         document.getElementById("bookingForm").addEventListener("submit", async (e) => {
             e.preventDefault();
 
@@ -384,7 +364,6 @@
             }
 
             try {
-                // 1. حفظ في قاعدة البيانات (بدون التحقق من التوفر)
                 await addDoc(appointmentsRef, {
                     name,
                     phone,
@@ -394,14 +373,11 @@
                     createdAt: Date.now()
                 });
 
-                // 2. بناء الرسالة
                 const message = buildNewBookingMessage(name, phone, service, date);
-                const doctorPhone = "967770423656"; // رقم الدكتور المطلوب
+                const doctorPhone = "967780731341"; // تم التحديث إلى الرقم الجديد
 
-                // 3. التوجيه إلى واتساب الدكتور مع الرسالة
                 window.location.href = `https://wa.me/${doctorPhone}?text=${encodeURIComponent(message)}`;
 
-                // 4. إظهار رسالة تأكيد
                 document.getElementById("bookingMessage").textContent = "✅ تم إرسال طلبك بنجاح! جاري توجيهك إلى واتساب الدكتور.";
                 document.getElementById("bookingForm").reset();
 
@@ -411,7 +387,6 @@
             }
         });
 
-        // ----- تسجيل الدخول للوحة -----
         document.getElementById("loginBtn").addEventListener("click", () => {
             const pass = document.getElementById("doctorPass").value;
             if (pass === DOCTOR_PASSWORD) {
@@ -432,7 +407,6 @@
             document.getElementById("doctorPass").value = "";
         });
 
-        // ----- أحداث التبويبات -----
         document.querySelectorAll(".filter-tab").forEach(btn => {
             btn.addEventListener("click", () => {
                 currentFilter = btn.dataset.filter;
@@ -445,3 +419,5 @@
     </script>
 </body>
 </html>
+
+                                    
