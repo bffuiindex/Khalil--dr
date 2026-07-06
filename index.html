@@ -222,12 +222,12 @@
         // ----- إعداد Firebase (ضع مفاتيحك الصحيحة هنا) -----
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
-            getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDocs, query, where 
+            getFirestore, collection, addDoc, onSnapshot, doc, updateDoc 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // ⚠️ استبدل هذه البيانات ببيانات مشروعك من Firebase Console
         const firebaseConfig = {
-            apiKey: "AIzaSyDDGOIbyLoB5awNmHkAh8Gh4Q",  // ضع المفتاح الكامل هنا
+            apiKey: "AIzaSyDDGOIbyLoB5awNmHkAh8Gh4Q",  // ضع المفتاح الكامل
             authDomain: "fares-clinic.firebaseapp.com",
             projectId: "fares-clinic",
             storageBucket: "fares-clinic.firebasestorage.app",
@@ -243,15 +243,16 @@
         // ----- متغيرات الحالة -----
         let allAppointments = [];
         let currentFilter = "الكل";
-        let panelUnlocked = false;
-        const DOCTOR_PASSWORD = "Khalil770423656"; // يمكنك تغييرها هنا
+        const DOCTOR_PASSWORD = "Khalil770423656";
 
-        // ----- مساعدات -----
+        // ----- دوال مساعدة -----
         function formatDate(dateStr) {
             if (!dateStr) return "";
             const d = new Date(dateStr);
             if (isNaN(d.getTime())) return dateStr;
-            return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+            const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+            const dayName = days[d.getDay()];
+            return `${dayName}، ${d.getDate()} ${d.toLocaleString( ar , { month:  long  })} ${d.getFullYear()}`;
         }
 
         function getStatusBadge(status) {
@@ -261,17 +262,6 @@
                 "تم الرفض": "status-rejected"
             };
             return `status-badge ${map[status] || "status-pending"}`;
-        }
-
-        // ----- التحقق من توفر التاريخ -----
-        async function isDateAvailable(date) {
-            const q = query(appointmentsRef, where("date", "==", date));
-            const snapshot = await getDocs(q);
-            const conflicting = snapshot.docs.some(doc => {
-                const data = doc.data();
-                return data.status === "قيد الانتظار" || data.status === "تم القبول";
-            });
-            return !conflicting;
         }
 
         // ----- عرض المواعيد في الجدول -----
@@ -309,7 +299,6 @@
             });
             container.innerHTML = html;
 
-            // ربط أحداث الأزرار
             document.querySelectorAll(".action-btn").forEach(btn => {
                 btn.addEventListener("click", handleAction);
             });
@@ -320,8 +309,6 @@
             const btn = e.currentTarget;
             const id = btn.dataset.id;
             const newStatus = btn.dataset.action;
-
-            // البحث عن بيانات الموعد
             const appointment = allAppointments.find(a => a.id === id);
             if (!appointment) return;
 
@@ -329,19 +316,16 @@
                 const docRef = doc(db, "appointments", id);
                 await updateDoc(docRef, { status: newStatus });
 
-                // إرسال رسالة واتساب تلقائيًا (في نفس الوقت)
                 const message = buildWhatsAppMessage(appointment, newStatus);
                 const phone = appointment.phone.replace(/\s/g, "");
-                // فتح واتساب في نافذة جديدة (لا تغير الصفحة الحالية)
                 window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-
             } catch (error) {
                 console.error("خطأ في تحديث الحالة:", error);
                 alert("حدث خطأ أثناء تحديث الحالة، حاول مجدداً.");
             }
         }
 
-        // ----- بناء نص رسالة واتساب -----
+        // ----- بناء رسالة واتساب للحالة -----
         function buildWhatsAppMessage(app, status) {
             const base = `🦷 عيادة د. خليل الوصابي 🦷\n\n`;
             const patient = `👤 المريض: ${app.name}\n📱 الهاتف: ${app.phone}\n🩺 الخدمة: ${app.service}\n📅 التاريخ: ${formatDate(app.date)}\n`;
@@ -350,6 +334,17 @@
             } else {
                 return base + `❌ تم رفض الموعد ❌\n\n${patient}\n\nنأسف لانشغال العيادة في هذا اليوم، يرجى اختيار تاريخ آخر.`;
             }
+        }
+
+        // ----- بناء رسالة الحجز الجديد (المطلوبة) -----
+        function buildNewBookingMessage(name, phone, service, date) {
+            const formattedDate = formatDate(date);
+            return `🦷 *اشعار حجز موعد جديد* 🦷\n\n` +
+                   `👤 *اسم المريض:* ${name}\n` +
+                   `📱 *رقم التواصل:* ${phone}\n` +
+                   `🩺 *الخدمة المطلوبة:* ${service}\n` +
+                   `📅 *التاريخ المفضّل:* ${formattedDate}\n\n` +
+                   `💬 _تم الحجز تلقائياً في قاعدة البيانات بانتظار مراجعتكم_`;
         }
 
         // ----- تحديث التبويبات -----
@@ -374,7 +369,7 @@
             renderAppointments();
         });
 
-        // ----- حدث تقديم الحجز -----
+        // ----- حدث تقديم الحجز (معدل حسب الطلب) -----
         document.getElementById("bookingForm").addEventListener("submit", async (e) => {
             e.preventDefault();
 
@@ -388,14 +383,8 @@
                 return;
             }
 
-            // التحقق من التوفر
-            const available = await isDateAvailable(date);
-            if (!available) {
-                alert(`عذراً، التاريخ ${formatDate(date)} محجوز بالكامل. يرجى اختيار يوم آخر.`);
-                return;
-            }
-
             try {
+                // 1. حفظ في قاعدة البيانات (بدون التحقق من التوفر)
                 await addDoc(appointmentsRef, {
                     name,
                     phone,
@@ -405,14 +394,16 @@
                     createdAt: Date.now()
                 });
 
-                // رسالة نجاح
-                document.getElementById("bookingMessage").textContent = "✅ تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.";
-                document.getElementById("bookingForm").reset();
+                // 2. بناء الرسالة
+                const message = buildNewBookingMessage(name, phone, service, date);
+                const doctorPhone = "967770423656"; // رقم الدكتور المطلوب
 
-                // إرسال إشعار للدكتور عبر واتساب (اختياري)
-                const doctorPhone = "967770423656";
-                const notifyMsg = `📩 حجز جديد من ${name}\n📱 ${phone}\n🩺 ${service}\n📅 ${formatDate(date)}`;
-                window.open(`https://wa.me/${doctorPhone}?text=${encodeURIComponent(notifyMsg)}`, "_blank");
+                // 3. التوجيه إلى واتساب الدكتور مع الرسالة
+                window.open(`https://wa.me/${doctorPhone}?text=${encodeURIComponent(message)}`, "_blank");
+
+                // 4. إظهار رسالة تأكيد
+                document.getElementById("bookingMessage").textContent = "✅ تم إرسال طلبك بنجاح! جاري توجيهك إلى واتساب الدكتور.";
+                document.getElementById("bookingForm").reset();
 
             } catch (error) {
                 console.error("خطأ في الحجز:", error);
@@ -424,7 +415,6 @@
         document.getElementById("loginBtn").addEventListener("click", () => {
             const pass = document.getElementById("doctorPass").value;
             if (pass === DOCTOR_PASSWORD) {
-                panelUnlocked = true;
                 document.getElementById("panelContent").className = "p-8 panel-unlocked";
                 document.getElementById("loginBtn").classList.add("hidden");
                 document.getElementById("doctorPass").classList.add("hidden");
@@ -435,7 +425,6 @@
         });
 
         document.getElementById("logoutBtn").addEventListener("click", () => {
-            panelUnlocked = false;
             document.getElementById("panelContent").className = "p-8 panel-locked";
             document.getElementById("loginBtn").classList.remove("hidden");
             document.getElementById("doctorPass").classList.remove("hidden");
@@ -452,7 +441,6 @@
             });
         });
 
-        // ----- التحقق من وجود بيانات أولية (للتأكد من عدم حدوث أخطاء) -----
         console.log("✅ التطبيق جاهز ويعمل بشكل كامل.");
     </script>
 </body>
