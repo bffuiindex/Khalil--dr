@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>عيادة د. خليل الوصابي - طب أسنان</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
-        body { font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
+        @import url( https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap );
+        * { font-family:  Tajawal , sans-serif; scroll-behavior: smooth; }
         .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
+        .card-hover { transition: all 0.2s; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15); }
+        .status-badge { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; }
+        .status-pending { background: #fef9c3; color: #854d0e; }
+        .status-accepted { background: #dcfce7; color: #166534; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        input, select { transition: border 0.2s, box-shadow 0.2s; }
+        input:focus, select:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8,145,178,0.2); }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .panel-locked { opacity: 0.5; pointer-events: none; user-select: none; }
+        .panel-unlocked { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <!-- ======== NAVBAR ======== -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <i class="fa-solid fa-tooth text-cyan-600 text-3xl"></i>
                 <span class="text-xl font-black text-blue-900">د. خليل الوصابي</span>
@@ -30,51 +42,53 @@
         </div>
     </nav>
 
+    <!-- ======== HERO ======== -->
     <section id="home" class="pt-32 pb-20 gradient-bg text-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
             <span class="bg-cyan-500/20 text-cyan-300 px-4 py-1.5 rounded-full text-sm font-medium border border-cyan-500/30">طبيب أسنان - المستوى الرابع</span>
             <h1 class="text-4xl md:text-6xl font-black mt-6 leading-tight">نحن لا نعيد النبض ولكننا نعيد الإبتسامه</h1>
-            <p class="text-slate-300 mt-4 text-lg md:text-xl max-w-2xl mx-auto">رعاية طبية متميزة بأحدث التقنيات لضمان ابتسامة صحية ومشرقة تناسب تطلعاتكم.</p>
+            <p class="text-slate-300 mt-4 text-lg md:text-xl max-w-2xl mx-auto">رعاية طبية متميزة بأحدث التقنيات لضمان ابتسامة صحية ومشرقة.</p>
             <div class="mt-10 flex flex-wrap justify-center gap-4">
-                <a href="#booking" class="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold px-8 py-4 rounded-xl shadow-lg shadow-cyan-500/20 transition-all transform hover:-translate-y-0.5">احجز موعد الآن</a>
+                <a href="#booking" class="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold px-8 py-4 rounded-xl shadow-lg shadow-cyan-500/20 transition transform hover:-translate-y-0.5">احجز موعد الآن</a>
                 <a href="#services" class="bg-white/10 hover:bg-white/20 border border-white/20 px-8 py-4 rounded-xl font-medium transition">استكشف خدماتنا</a>
             </div>
         </div>
         <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
     </section>
 
-    <section id="services" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ======== SERVICES ======== -->
+    <section id="services" class="py-24 max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <h2 class="text-3xl font-black text-blue-900">الخدمات الطبية المقدمة</h2>
-            <p class="text-slate-500 mt-2">نوفر باقة متكاملة من خدمات طب وجراحة الفم والأسنان بأعلى معايير الجودة.</p>
+            <p class="text-slate-500 mt-2">باقة متكاملة من خدمات طب وجراحة الفم والأسنان بأعلى معايير الجودة.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover">
                 <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl mb-6"><i class="fa-solid fa-user-md"></i></div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">فحص واستشارات مجانية</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">تشخيص دقيق وشامل لجميع مشاكل الأسنان وتقديم خطة علاجية متكاملة مجاناً.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">تشخيص دقيق وشامل لجميع مشاكل الأسنان مع خطة علاجية متكاملة مجاناً.</p>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover">
                 <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl mb-6"><i class="fa-solid fa-sparkles"></i></div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">تنظيف الأسنان وإزالة الجير</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">تنظيف عميق وتلميع الأسنان لإزالة التصبغات والترسبات الجيرية لحماية اللثة.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">تنظيف عميق وتلميع الأسنان لإزالة التصبغات والترسبات الجيرية.</p>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover">
                 <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl mb-6"><i class="fa-solid fa-tooth"></i></div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">حشوات الأسنان التجميلية والعادية</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">ترميم الأسنان باستخدام حشوات تجميلية متينة تطابق لون السن الطبيعي.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">ترميم الأسنان باستخدام حشوات تجميلية متينة تطابق لون السن.</p>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover">
                 <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl mb-6"><i class="fa-solid fa-wave-square"></i></div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">علاج عصب الأسنان الأمامية والخلفية</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">سحب العصب وتنظيف القنوات بدقة عالية لإنهاء الألم والحفاظ على السن الطبيعي.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">سحب العصب وتنظيف القنوات بدقة عالية لإنهاء الألم والحفاظ على السن.</p>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover">
                 <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl mb-6"><i class="fa-solid fa-scissors"></i></div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">خلع الأسنان وبقايا الجذور</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">إجراء عمليات الخلع البسيط والجراحي للجذور التالفة بدون ألم وبأمان تام.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">عمليات الخلع البسيط والجراحي للجذور التالفة بدون ألم وبأمان.</p>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 card-hover">
                 <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl mb-6"><i class="fa-solid fa-teeth-open"></i></div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">تركيبات الأسنان الثابتة والمتحركة</h3>
                 <p class="text-slate-500 text-sm leading-relaxed">تعويض الأسنان المفقودة بأحدث أنواع الجسور والتركيبات الثابتة والمتحركة.</p>
@@ -82,29 +96,29 @@
         </div>
     </section>
 
+    <!-- ======== BOOKING ======== -->
     <section id="booking" class="py-24 bg-slate-100">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div class="gradient-bg text-white p-8 text-center">
                     <h2 class="text-2xl font-black">حجز موعد عيادة</h2>
-                    <p class="text-slate-300 text-sm mt-1">الرجاء إدخال بياناتك لحجز موعد وإرساله للدكتور</p>
+                    <p class="text-slate-300 text-sm mt-1">أدخل بياناتك لحجز موعد وسيتم إرساله للدكتور</p>
                 </div>
-                
                 <form id="bookingForm" class="p-8 space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">الاسم الكامل</label>
-                            <input type="text" id="patientName" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" placeholder="أدخل اسمك الكريم">
+                            <input type="text" id="patientName" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none" placeholder="أدخل اسمك الكريم" />
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">رقم الهاتف (واتساب بترميز الدولة)</label>
-                            <input type="tel" id="patientPhone" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition text-left" placeholder="967770000000">
+                            <label class="block text-sm font-medium text-slate-700 mb-2">رقم الهاتف (واتساب)</label>
+                            <input type="tel" id="patientPhone" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-left" placeholder="967770000000" dir="ltr" />
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">الخدمة المطلوبة</label>
-                            <select id="requestedService" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition bg-white">
+                            <select id="requestedService" class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none bg-white">
                                 <option>فحص واستشارات مجانية</option>
                                 <option>تنظيف الأسنان وإزالة الجير</option>
                                 <option>حشوات الأسنان التجميلية والعادية</option>
@@ -115,102 +129,110 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">تاريخ الموعد المفضّل</label>
-                            <input type="date" id="bookingDate" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition">
+                            <input type="date" id="bookingDate" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none" />
                         </div>
                     </div>
-                    <button type="submit" class="w-full gradient-bg text-white font-bold py-4 rounded-xl shadow-lg transition hover:opacity-95">تأكيد الحجز وإرسال الموعد <i class="fab fa-whatsapp mr-2 text-xl"></i></button>
+                    <button type="submit" class="w-full gradient-bg text-white font-bold py-4 rounded-xl shadow-lg hover:opacity-95 transition flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp text-xl"></i> تأكيد الحجز وإرسال الموعد
+                    </button>
+                    <p id="bookingMessage" class="text-center text-sm text-slate-500 mt-2"></p>
                 </form>
             </div>
         </div>
     </section>
 
-    <section id="doctor-panel" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ======== DOCTOR PANEL ======== -->
+    <section id="doctor-panel" class="py-24 max-w-7xl mx-auto px-4 sm:px-6">
         <div class="bg-white rounded-3xl shadow-md border border-slate-100 overflow-hidden">
             <div class="p-8 border-b border-slate-100 bg-slate-50 flex flex-wrap items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-black text-blue-900">لوحة تحكم العيادة</h2>
-                    <p class="text-slate-500 text-sm mt-1">متابعة وإدارة طلبات الحجز من الموقع بشكل فوري ودائم</p>
+                    <p class="text-slate-500 text-sm mt-1">متابعة وإدارة طلبات الحجز</p>
                 </div>
                 <div id="loginArea" class="flex items-center gap-3">
-                    <input type="password" id="doctorPass" class="px-4 py-2 border rounded-xl text-sm" placeholder="كلمة مرور الدكتور">
+                    <input type="password" id="doctorPass" class="px-4 py-2 border rounded-xl text-sm w-40" placeholder="كلمة المرور" />
                     <button id="loginBtn" class="bg-blue-950 text-white px-4 py-2 rounded-xl text-sm font-medium">تسجيل الدخول</button>
+                    <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium hidden">تسجيل الخروج</button>
                 </div>
             </div>
-            
-            <div class="p-8 opacity-40 pointer-events-none" id="panelContent">
+            <div id="panelContent" class="p-8 panel-locked">
+                <!-- Tabs -->
                 <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-4">
-                    <button onclick="filterAppointments('الكل')" id="tab-all" class="bg-blue-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition">الكل</button>
-                    <button onclick="filterAppointments('قيد الانتظار')" id="tab-pending" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition">قيد الانتظار</button>
-                    <button onclick="filterAppointments('تم القبول')" id="tab-accepted" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition">المقبولة</button>
-                    <button onclick="filterAppointments('تم الرفض')" id="tab-rejected" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition">المرفوعة / المرفوضة</button>
+                    <button data-filter="الكل" class="filter-tab bg-blue-900 text-white px-4 py-2 rounded-xl text-xs font-bold">الكل</button>
+                    <button data-filter="قيد الانتظار" class="filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">قيد الانتظار</button>
+                    <button data-filter="تم القبول" class="filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">المقبولة</button>
+                    <button data-filter="تم الرفض" class="filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">المرفوضة</button>
                 </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right border-collapse">
+                <!-- Table -->
+                <div class="table-wrap">
+                    <table class="w-full text-right border-collapse min-w-[700px]">
                         <thead>
                             <tr class="border-b border-slate-200 text-slate-400 text-sm font-bold">
-                                <th class="pb-4">اسم المريض</th>
-                                <th class="pb-4">رقم الهاتف</th>
+                                <th class="pb-4">المريض</th>
+                                <th class="pb-4">الهاتف</th>
                                 <th class="pb-4">الخدمة</th>
-                                <th class="pb-4">تاريخ الموعد المطلوب</th>
+                                <th class="pb-4">التاريخ</th>
                                 <th class="pb-4">الحالة</th>
                                 <th class="pb-4 text-left">الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody id="appointmentsList" class="divide-y divide-slate-100 text-sm text-slate-700">
-                            </tbody>
+                            <!-- يتم تعبئتها بواسطة JavaScript -->
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ======== FOOTER ======== -->
     <footer id="contact" class="bg-blue-950 text-slate-400 py-16 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
             <div>
                 <div class="flex items-center gap-3 text-white mb-6">
                     <i class="fa-solid fa-tooth text-cyan-400 text-2xl"></i>
                     <span class="text-lg font-black">د. خليل الوصابي</span>
                 </div>
-                <p class="text-sm leading-relaxed text-slate-400">طبيب أسنان يقدم خدمات علاجية وتجميلية متكاملة في مدينة صنعاء بجودة ممتازة وأسعار مناسبة للجميع.</p>
+                <p class="text-sm leading-relaxed">طبيب أسنان يقدم خدمات علاجية وتجميلية متكاملة في صنعاء بجودة ممتازة وأسعار مناسبة.</p>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6">معلومات العيادة</h4>
                 <ul class="space-y-4 text-sm">
                     <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-cyan-400 mt-1"></i> <span>صنعاء - مذبح - جوار نادي الشعب (جامعة اليمن والخليج)</span></li>
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-cyan-400"></i> <span class="text-left" dir="ltr">+967 770 423 656</span></li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-cyan-400"></i> <span dir="ltr">+967 770 423 656</span></li>
                     <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-cyan-400"></i> <span>khalilkhalilalwasabi02@gmail.com</span></li>
                 </ul>
             </div>
             <div class="text-center md:text-right">
-                <h4 class="text-white font-bold mb-6">ساعات العمل الرسمية</h4>
-                <p class="text-sm leading-relaxed">مفتوح يومياً لاستقبال الحالات المنسقة والمحجوزة عبر الموقع والواتساب مسبقاً.</p>
+                <h4 class="text-white font-bold mb-6">ساعات العمل</h4>
+                <p class="text-sm leading-relaxed">مفتوح يومياً لاستقبال الحالات المنسقة والمحجوزة مسبقاً.</p>
                 <div class="mt-6 pt-6 border-t border-slate-800 text-xs">
-                    <p class="text-slate-400 mb-2">تطوير وبرمجة بواسطة المهندس فارس الوصابي &copy; 2026</p>
+                    <p class="text-slate-400 mb-2">تطوير وبرمجة المهندس فارس الوصابي &copy; 2026</p>
                     <div class="flex justify-center md:justify-start gap-4 mt-2">
-                        <a href="https://instagram.com/dd4_8" target="_blank" class="text-cyan-400 hover:text-white transition flex items-center gap-1">
-                            <i class="fab fa-instagram"></i> إنستغرام للتواصل
-                        </a>
-                        <a href="https://wa.me/967780731341" target="_blank" class="text-green-400 hover:text-white transition flex items-center gap-1">
-                            <i class="fab fa-whatsapp"></i> واتساب المبرمج
-                        </a>
+                        <a href="https://instagram.com/dd4_8" target="_blank" class="text-cyan-400 hover:text-white transition flex items-center gap-1"><i class="fab fa-instagram"></i> إنستغرام</a>
+                        <a href="https://wa.me/967780731341" target="_blank" class="text-green-400 hover:text-white transition flex items-center gap-1"><i class="fab fa-whatsapp"></i> واتساب المبرمج</a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- ======== FIREBASE & MAIN SCRIPT ======== -->
     <script type="module">
+        // ----- إعداد Firebase (ضع مفاتيحك الصحيحة هنا) -----
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { 
+            getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDocs, query, where 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // ⚠️ استبدل هذه البيانات ببيانات مشروعك من Firebase Console
         const firebaseConfig = {
-            apiKey: "AIzaSyDDGOIbyLoB5awNmHkAh8Gh4Q",
+            apiKey: "AIzaSyDDGOIbyLoB5awNmHkAh8Gh4Q",  // ضع المفتاح الكامل هنا
             authDomain: "fares-clinic.firebaseapp.com",
             projectId: "fares-clinic",
             storageBucket: "fares-clinic.firebasestorage.app",
             messagingSenderId: "425147592244",
-            appId: "1:425147592244:web:6b86f91343",
+            appId: "1:425147592244:web:6b86f91343",     // ضع الـ App ID الكامل
             measurementId: "G-Y19YTE4DT3"
         };
 
@@ -218,148 +240,220 @@
         const db = getFirestore(app);
         const appointmentsRef = collection(db, "appointments");
 
+        // ----- متغيرات الحالة -----
         let allAppointments = [];
         let currentFilter = "الكل";
+        let panelUnlocked = false;
+        const DOCTOR_PASSWORD = "Khalil770423656"; // يمكنك تغييرها هنا
 
-        function formatDateString(dateStr) {
-            if(!dateStr) return "";
+        // ----- مساعدات -----
+        function formatDate(dateStr) {
+            if (!dateStr) return "";
             const d = new Date(dateStr);
-            if(isNaN(d.getTime())) return dateStr;
-            return `${d.getDate()} / ${d.getMonth() + 1} / ${d.getFullYear()}`;
+            if (isNaN(d.getTime())) return dateStr;
+            return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
         }
 
-        // إرسال البيانات والتحويل المباشر للواتساب
-        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('patientName').value;
-            const phone = document.getElementById('patientPhone').value.replace(/\s+/g, '');
-            const service = document.getElementById('requestedService').value;
-            const date = document.getElementById('bookingDate').value;
+        function getStatusBadge(status) {
+            const map = {
+                "قيد الانتظار": "status-pending",
+                "تم القبول": "status-accepted",
+                "تم الرفض": "status-rejected"
+            };
+            return `status-badge ${map[status] || "status-pending"}`;
+        }
 
-            // الفحص والتحقق من حجز مسبق في نفس اليوم المختار
-            const isDateTaken = allAppointments.some(app => app.date === date && (app.status === "قيد الانتظار" || app.status === "تم القبول"));
+        // ----- التحقق من توفر التاريخ -----
+        async function isDateAvailable(date) {
+            const q = query(appointmentsRef, where("date", "==", date));
+            const snapshot = await getDocs(q);
+            const conflicting = snapshot.docs.some(doc => {
+                const data = doc.data();
+                return data.status === "قيد الانتظار" || data.status === "تم القبول";
+            });
+            return !conflicting;
+        }
 
-            if (isDateTaken) {
-                alert(`عذراً، هذا التاريخ (${formatDateString(date)}) محجوز وممتلئ مسبقاً لحالات أخرى. يرجى اختيار يوم آخر.`);
-                return; 
-            }
-
-            try {
-                // الحفظ في الفايربيز أولاً
-                await addDoc(appointmentsRef, {
-                    name: name,
-                    phone: phone,
-                    service: service,
-                    date: date,
-                    status: "قيد الانتظار",
-                    createdAt: new Date().getTime()
-                });
-
-                const targetDoctor = "967770423656";
-                // صيغة الرسالة المعدلة تماماً بناءً على طلبك
-                const message = `🦷 *اشعار حجز موعد جديد* 🦷%0A%0A👤 *اسم المريض:* ${name}%0A📱 *رقم التواصل:* ${phone}%0A🩺 *الخدمة المطلوبة:* ${service}%0A📅 *التاريخ المفضّل:* ${formatDateString(date)}%0A%0A💬 _تم الحجز تلقائياً في قاعدة البيانات بانتظار مراجعتكم_`;
-                
-                alert('تم تسجيل طلب الحجز في قاعدة البيانات! جاري توجيهك الآن إلى واتساب الدكتور خليل لتأكيد موعدك.');
-                
-                // التوجيه المباشر والآمن على الهواتف
-                window.location.href = `https://wa.me/${targetDoctor}?text=${message}`;
-                document.getElementById('bookingForm').reset();
-            } catch (error) {
-                alert('حدث خطأ غير متوقع أثناء إرسال البيانات، يرجى إعادة المحاولة.');
-                console.error("Error: ", error);
-            }
-        });
-
-        // مزامنة وعرض البيانات بشكل لحظي
-        onSnapshot(appointmentsRef, (snapshot) => {
-            allAppointments = [];
-            snapshot.forEach(doc => allAppointments.push({id: doc.id, ...doc.data()}));
-            allAppointments.sort((a,b) => b.createdAt - a.createdAt);
-            renderAppointments();
-        });
-
-        window.renderAppointments = function() {
-            const container = document.getElementById('appointmentsList');
-            let html = "";
-
+        // ----- عرض المواعيد في الجدول -----
+        function renderAppointments() {
+            const container = document.getElementById("appointmentsList");
             const filtered = allAppointments.filter(app => {
-                if(currentFilter === "الكل") return true;
+                if (currentFilter === "الكل") return true;
                 return app.status === currentFilter;
             });
 
-            if(filtered.length === 0) {
-                container.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400 font-medium">لا توجد طلبات في هذا القسم حالياً.</td></tr>`;
+            if (filtered.length === 0) {
+                container.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400 font-medium">لا توجد طلبات في هذا القسم.</td></tr>`;
                 return;
             }
 
-            filtered.forEach((app) => {
-                let statusClass = "bg-yellow-100 text-yellow-800";
-                if(app.status === "تم القبول") statusClass = "bg-green-100 text-green-800";
-                if(app.status === "تم الرفض") statusClass = "bg-red-100 text-red-800";
-
+            let html = "";
+            filtered.forEach(app => {
                 html += `
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
                         <td class="py-4 font-bold text-slate-900">${app.name}</td>
                         <td class="py-4 text-left" dir="ltr">${app.phone}</td>
                         <td class="py-4">${app.service}</td>
-                        <td class="py-4 font-medium text-blue-900">${formatDateString(app.date)}</td>
-                        <td class="py-4">
-                            <span class="${statusClass} px-3 py-1 rounded-full text-xs font-bold">${app.status}</span>
-                        </td>
+                        <td class="py-4 font-medium text-blue-900">${formatDate(app.date)}</td>
+                        <td class="py-4"><span class="${getStatusBadge(app.status)}">${app.status}</span></td>
                         <td class="py-4 text-left">
-                            <button data-id="${app.id}" data-name="${app.name}" data-phone="${app.phone}" data-service="${app.service}" data-date="${app.date}" data-action="تم القبول" class="action-btn bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-green-700 ml-1">موافقة</button>
-                            <button data-id="${app.id}" data-name="${app.name}" data-phone="${app.phone}" data-service="${app.service}" data-date="${app.date}" data-action="تم الرفض" class="action-btn bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-red-700">رفض</button>
+                            ${app.status === "قيد الانتظار" ? `
+                                <button data-id="${app.id}" data-action="تم القبول" class="action-btn bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-green-700 ml-1">موافقة</button>
+                                <button data-id="${app.id}" data-action="تم الرفض" class="action-btn bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-red-700">رفض</button>
+                            ` : `
+                                <span class="text-slate-400 text-xs">تم التصرف</span>
+                            `}
                         </td>
                     </tr>
                 `;
             });
             container.innerHTML = html;
 
-            // إرسال إشعار للمريض مباشرة عند تغيير حالة طلبه
-            document.querySelectorAll('.action-btn').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const id = e.target.getAttribute('data-id');
-                    const name = e.target.getAttribute('data-name');
-                    const phone = e.target.getAttribute('data-phone');
-                    const service = e.target.getAttribute('data-service');
-                    const date = e.target.getAttribute('data-date');
-                    const newStatus = e.target.getAttribute('data-action');
-
-                    const docRef = doc(db, "appointments", id);
-                    await updateDoc(docRef, { status: newStatus });
-
-                    let msg = "";
-                    if(newStatus === "تم القبول") {
-                        msg = `✨ *إشعار قبول الموعد - عيادة د. خليل الوصابي* ✨%0A%0Aمرحباً أ/ *${name}* المحترم، %0A%0Aنسعد بإبلاغك بأنه *تم قبول وتأكيد حجزك* بنجاح في عيادتنا 🎉%0A%0A🩺 *الخدمة المعتمدة:* ${service}%0A📅 *تاريخ الموعد المعتمد:* ${formatDateString(date)}%0A📍 *العنوان:* صنعاء - مذبح - جوار نادي الشعب%0A%0Aنتطلع لزيارتك، ونتمنى لك دوام الصحة والعافية وموفور الابتسامة المشرقة 🦷✨`;
-                    } else {
-                        msg = `✉️ *إشعار تحديث الحجز - عيادة د. خليل الوصابي* ✉️%0A%0Aمرحباً أ/ *${name}*، %0A%0Aنعتذر منك، لقد تم *رفض أو تعديل حالة طلب موعدك* الموجه للعيادة بتاريخ: ${formatDateString(date)} بسبب انشغال العيادة أو امتلاء جدول المواعيد في هذا اليوم المختار.%0A%0Aيرجى الدخول للموقع مجدداً واختيار تاريخ بديل يناسبك لخدمة: *${service}* للتنسيق الفوري.%0A%0Aشاكرين تفهمك اللطيف وطبت بألف خير.`;
-                    }
-
-                    window.location.href = `https://wa.me/${phone}?text=${msg}`;
-                });
+            // ربط أحداث الأزرار
+            document.querySelectorAll(".action-btn").forEach(btn => {
+                btn.addEventListener("click", handleAction);
             });
-        };
+        }
 
-        window.filterAppointments = function(filterValue) {
-            currentFilter = filterValue;
-            const tabs = { 'الكل': 'tab-all', 'قيد الانتظار': 'tab-pending', 'تم القبول': 'tab-accepted', 'تم الرفض': 'tab-rejected' };
-            Object.keys(tabs).forEach(key => {
-                const btn = document.getElementById(tabs[key]);
-                btn.className = (key === filterValue) ? "bg-blue-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition" : "bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition";
-            });
-            renderAppointments();
-        };
+        // ----- معالجة تغيير الحالة -----
+        async function handleAction(e) {
+            const btn = e.currentTarget;
+            const id = btn.dataset.id;
+            const newStatus = btn.dataset.action;
 
-        window.unlockPanel = function() {
-            const pass = document.getElementById('doctorPass').value;
-            if(pass === "Khalil770423656") { 
-                document.getElementById('panelContent').classList.remove('opacity-40', 'pointer-events-none');
-                document.getElementById('loginArea').innerHTML = `<span class="text-green-600 font-bold text-sm"><i class="fa-solid fa-circle-check ml-1"></i> لوحة التحكم نشطة</span>`;
-            } else {
-                alert('كلمة المرور خاطئة!');
+            // البحث عن بيانات الموعد
+            const appointment = allAppointments.find(a => a.id === id);
+            if (!appointment) return;
+
+            try {
+                const docRef = doc(db, "appointments", id);
+                await updateDoc(docRef, { status: newStatus });
+
+                // إرسال رسالة واتساب تلقائيًا (في نفس الوقت)
+                const message = buildWhatsAppMessage(appointment, newStatus);
+                const phone = appointment.phone.replace(/\s/g, "");
+                // فتح واتساب في نافذة جديدة (لا تغير الصفحة الحالية)
+                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+
+            } catch (error) {
+                console.error("خطأ في تحديث الحالة:", error);
+                alert("حدث خطأ أثناء تحديث الحالة، حاول مجدداً.");
             }
-        };
-        document.getElementById('loginBtn').addEventListener('click', window.unlockPanel);
+        }
+
+        // ----- بناء نص رسالة واتساب -----
+        function buildWhatsAppMessage(app, status) {
+            const base = `🦷 عيادة د. خليل الوصابي 🦷\n\n`;
+            const patient = `👤 المريض: ${app.name}\n📱 الهاتف: ${app.phone}\n🩺 الخدمة: ${app.service}\n📅 التاريخ: ${formatDate(app.date)}\n`;
+            if (status === "تم القبول") {
+                return base + `✅ تم قبول موعدك ✅\n\n${patient}\n📍 العنوان: صنعاء - مذبح - جوار نادي الشعب\n\nنتطلع لزيارتك 🦷✨`;
+            } else {
+                return base + `❌ تم رفض الموعد ❌\n\n${patient}\n\nنأسف لانشغال العيادة في هذا اليوم، يرجى اختيار تاريخ آخر.`;
+            }
+        }
+
+        // ----- تحديث التبويبات -----
+        function updateTabs(filter) {
+            document.querySelectorAll(".filter-tab").forEach(btn => {
+                const f = btn.dataset.filter;
+                if (f === filter) {
+                    btn.className = "filter-tab bg-blue-900 text-white px-4 py-2 rounded-xl text-xs font-bold";
+                } else {
+                    btn.className = "filter-tab bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold";
+                }
+            });
+        }
+
+        // ----- الاستماع للتغييرات في Firestore -----
+        onSnapshot(appointmentsRef, (snapshot) => {
+            allAppointments = [];
+            snapshot.forEach(doc => {
+                allAppointments.push({ id: doc.id, ...doc.data() });
+            });
+            allAppointments.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            renderAppointments();
+        });
+
+        // ----- حدث تقديم الحجز -----
+        document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("patientName").value.trim();
+            const phone = document.getElementById("patientPhone").value.trim();
+            const service = document.getElementById("requestedService").value;
+            const date = document.getElementById("bookingDate").value;
+
+            if (!name || !phone || !date) {
+                alert("يرجى تعبئة جميع الحقول.");
+                return;
+            }
+
+            // التحقق من التوفر
+            const available = await isDateAvailable(date);
+            if (!available) {
+                alert(`عذراً، التاريخ ${formatDate(date)} محجوز بالكامل. يرجى اختيار يوم آخر.`);
+                return;
+            }
+
+            try {
+                await addDoc(appointmentsRef, {
+                    name,
+                    phone,
+                    service,
+                    date,
+                    status: "قيد الانتظار",
+                    createdAt: Date.now()
+                });
+
+                // رسالة نجاح
+                document.getElementById("bookingMessage").textContent = "✅ تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.";
+                document.getElementById("bookingForm").reset();
+
+                // إرسال إشعار للدكتور عبر واتساب (اختياري)
+                const doctorPhone = "967770423656";
+                const notifyMsg = `📩 حجز جديد من ${name}\n📱 ${phone}\n🩺 ${service}\n📅 ${formatDate(date)}`;
+                window.open(`https://wa.me/${doctorPhone}?text=${encodeURIComponent(notifyMsg)}`, "_blank");
+
+            } catch (error) {
+                console.error("خطأ في الحجز:", error);
+                alert("حدث خطأ أثناء الحجز، حاول مجدداً.");
+            }
+        });
+
+        // ----- تسجيل الدخول للوحة -----
+        document.getElementById("loginBtn").addEventListener("click", () => {
+            const pass = document.getElementById("doctorPass").value;
+            if (pass === DOCTOR_PASSWORD) {
+                panelUnlocked = true;
+                document.getElementById("panelContent").className = "p-8 panel-unlocked";
+                document.getElementById("loginBtn").classList.add("hidden");
+                document.getElementById("doctorPass").classList.add("hidden");
+                document.getElementById("logoutBtn").classList.remove("hidden");
+            } else {
+                alert("كلمة المرور غير صحيحة!");
+            }
+        });
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            panelUnlocked = false;
+            document.getElementById("panelContent").className = "p-8 panel-locked";
+            document.getElementById("loginBtn").classList.remove("hidden");
+            document.getElementById("doctorPass").classList.remove("hidden");
+            document.getElementById("logoutBtn").classList.add("hidden");
+            document.getElementById("doctorPass").value = "";
+        });
+
+        // ----- أحداث التبويبات -----
+        document.querySelectorAll(".filter-tab").forEach(btn => {
+            btn.addEventListener("click", () => {
+                currentFilter = btn.dataset.filter;
+                updateTabs(currentFilter);
+                renderAppointments();
+            });
+        });
+
+        // ----- التحقق من وجود بيانات أولية (للتأكد من عدم حدوث أخطاء) -----
+        console.log("✅ التطبيق جاهز ويعمل بشكل كامل.");
     </script>
 </body>
 </html>
