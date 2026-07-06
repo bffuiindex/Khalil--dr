@@ -399,7 +399,7 @@
                 const doctorPhone = "967770423656"; // رقم الدكتور المطلوب
 
                 // 3. التوجيه إلى واتساب الدكتور مع الرسالة
-                window.open(`https://wa.me/${doctorPhone}?text=${encodeURIComponent(message)}`, "_blank");
+                window.location.href = `https://wa.me/${doctorPhone}?text=${encodeURIComponent(message)}`;
 
                 // 4. إظهار رسالة تأكيد
                 document.getElementById("bookingMessage").textContent = "✅ تم إرسال طلبك بنجاح! جاري توجيهك إلى واتساب الدكتور.";
